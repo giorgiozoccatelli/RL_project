@@ -31,7 +31,7 @@ def main():
 	render = True
 
 	final_state = None  # To store the last state
-
+	
 	for episode in range(n_episodes):
 	    if final_state is None:
 	        state = env.reset()  # First episode requires reset
@@ -50,6 +50,9 @@ def main():
 	
 	        # Optionally render the environment
 	        env.render()
+
+    print(f"Episode {episode} ended.")
+
 
 
 if __name__ == '__main__':
