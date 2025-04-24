@@ -54,10 +54,10 @@ for episode in range(n_episodes):
         # Save the final state for the next episode
         if done:
             final_state = state  # Store final state when the episode ends
+	    env.render()
+
 
         # Optionally render the environment
-        if render:
-            env.render()
 
     print(f"Episode {episode} ended.")
 
