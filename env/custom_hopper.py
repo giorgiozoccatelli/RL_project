@@ -45,7 +45,8 @@ class CustomHopper(MujocoEnv, utils.EzPickle):
         """Get value of mass for each link"""
         masses = np.array( self.sim.model.body_mass[1:] )
         return masses
-
+    def get_obs(self):
+        return self._get_obs()  
 
     def set_parameters(self, task):
         """Set each hopper link's mass to a new value"""
