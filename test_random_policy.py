@@ -34,7 +34,7 @@ def main():
         else:
             env.reset()
             env.set_state(final_qpos, final_qvel)
-            state = env.step(env.action_space.sample())[0]  # step to generate a new observation
+            state = env.get_obs()  # step to generate a new observation
 
         print(f"\n=== Episode {episode} START ===")
         print("Initial state:", state)
