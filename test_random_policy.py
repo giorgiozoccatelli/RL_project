@@ -32,7 +32,7 @@ def main():
 
 	for episode in range(n_episodes):
 		done = False
-		state = env.reset()	# Reset environment to initial state
+		#state = env.reset() # avoid reset environment to initial state
 
 		while not done:  # Until the episode is over
 
