@@ -15,11 +15,10 @@ def main():
 
     for episode in range(n_episodes):
         if final_qpos is None:
-            state = env.reset()
+            env.reset()
         else:
             env.reset()
             env.set_state(final_qpos, final_qvel)
-            state = env._get_obs()  # Or env.get_obs() depending on your implementation
 
         done = False
         while not done:
