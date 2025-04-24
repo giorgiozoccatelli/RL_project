@@ -36,6 +36,8 @@ def main():
             env.set_state(final_qpos, final_qvel)
             env.sim.forward()  # Recompute sim state (forces, contacts, etc.)
             state = env.get_obs()  # This should now match final state from last ep
+        print("Restored qpos:", final_qpos)
+        print("Restored qvel:", final_qvel)
 
         print(f"\n=== Episode {episode} START ===")
         print("Initial state:", state)
