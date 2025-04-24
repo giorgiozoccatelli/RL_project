@@ -12,55 +12,37 @@
                 - When exactly is the episode over?
                 - What is an action here?
 """
-import pdb
-
 import gym
-
 from env.custom_hopper import *
-
-
-def main():
-	env = gym.make('CustomHopper-source-v0')
-	# env = gym.make('CustomHopper-target-v0')
-
-	print('State space:', env.observation_space) # state-space
-	print('Action space:', env.action_space) # action-space
-	print('Dynamics parameters:', env.get_parameters()) # masses of each link of the Hopper
-
-	import gym
 import numpy as np
 
-# Initialize environment
-env = gym.make("CustomHopper-source-v0")
+def main():
+    env = gym.make("CustomHopper-source-v0")
+    print('State space:', env.observation_space)
+    print('Action space:', env.action_space)
+    print('Dynamics parameters:', env.get_parameters())
 
-final_state = None  # To store the last state
+    n_episodes = 500
+    render = True
 
-n_episodes = 500
-render = True
-
-for episode in range(n_episodes):
-    # If there's no final state (for the first episode), do a reset
+    for episode in range(n_episodes):
     if final_state is None:
-        state = env.reset()  # First episode requires reset
+        state = env.reset()
     else:
-        state = final_state  # For subsequent episodes, use the final state
+        env.reset()
+        env.set_state(final_state)  # Inject the final state back into the env
+        state = final_state
 
     done = False
-
     while not done:
-        action = env.action_space.sample()  # Take a random action
-        state, reward, done, info = env.step(action)  # Step the environment
+        action = env.action_space.sample()
+        state, reward, done, info = env.step(action)
+        if render:
+            env.render()
 
-        # Save the final state for the next episode
-        if done:
-            final_state = state  # Store final state when the episode ends
-
-    # Render the environment after the episode finishes
-    env.render()  # Render after the episode ends
-
+    final_state = state  # Save state even if done
     print(f"Episode {episode} ended.")
 
-
-
 if __name__ == '__main__':
-	main()
+    main()
+
