@@ -51,7 +51,6 @@ def main():
 	        # Optionally render the environment
 	        env.render()
 
-    print(f"Episode {episode} ended.")
 
 
 
