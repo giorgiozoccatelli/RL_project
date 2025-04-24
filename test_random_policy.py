@@ -36,6 +36,7 @@ def main():
             action = env.action_space.sample()
             state, reward, done, info = env.step(action)
             total_reward += reward
+            print(info)
 
             if render:
                 env.render()
