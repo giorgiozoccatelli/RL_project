@@ -1,16 +1,3 @@
-"""Test a random policy on the OpenAI Gym Hopper environment.
-
-    TASK 1: Play around with this code to get familiar with the
-            Hopper environment.
-
-            For example:
-                - What is the state space in the Hopper environment? Is it discrete or continuous?
-                - What is the action space in the Hopper environment? Is it discrete or continuous?
-                - What is the mass value of each link of the Hopper environment, in the source and target variants respectively?
-                - what happens if you don't reset the environment even after the episode is over?
-                - When exactly is the episode over?
-                - What is an action here?
-"""
 import gym
 from env.custom_hopper import *
 import numpy as np
@@ -23,15 +10,16 @@ def main():
 
     n_episodes = 500
     render = True
-    final_state = None
+    final_qpos = None
+    final_qvel = None
 
     for episode in range(n_episodes):
-        if final_state is None:
+        if final_qpos is None:
             state = env.reset()
         else:
             env.reset()
-            env.set_state(final_state)  # Inject the final state back into the env
-            state = final_state
+            env.set_state(final_qpos, final_qvel)
+            state = env._get_obs()  # Or env.get_obs() depending on your implementation
 
         done = False
         while not done:
@@ -40,7 +28,10 @@ def main():
             if render:
                 env.render()
 
-        final_state = state  # Save state even if done
+        # Save simulator state (qpos and qvel)
+        final_qpos = env.sim.data.qpos.copy()
+        final_qvel = env.sim.data.qvel.copy()
+
         print(f"Episode {episode} ended.")
 
 if __name__ == '__main__':
