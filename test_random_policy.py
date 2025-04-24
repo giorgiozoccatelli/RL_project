@@ -30,18 +30,26 @@ def main():
 	n_episodes = 500
 	render = True
 
+	final_state = None  # To store the last state
+
 	for episode in range(n_episodes):
-		done = False
-		#state = env.reset() # avoid reset environment to initial state
-
-		while not done:  # Until the episode is over
-
-			action = env.action_space.sample()	# Sample random action
-		
-			state, reward, done, info = env.step(action)	# Step the simulator to the next timestep
-
-			if render:
-				env.render()
+	    if final_state is None:
+		state = env.reset()  # First episode requires reset
+	    else:
+		state = final_state  # For subsequent episodes, use the final state
+	
+	    done = False
+	
+	    while not done:
+		action = env.action_space.sample()  # Take a random action
+		state, reward, done, info = env.step(action)
+	
+		# Save the final state for the next episode
+		if done:
+		    final_state = state
+	
+		# Optionally render the environment
+		env.render()
 
 	
 
