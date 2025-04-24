@@ -49,20 +49,14 @@ for episode in range(n_episodes):
 
     while not done:
         action = env.action_space.sample()  # Take a random action
-        state, reward, done, info = env.step(action)
-	env.render()
-# Step the environment
+        state, reward, done, info = env.step(action)  # Step the environment
+        env.render()  # Render the environment
 
         # Save the final state for the next episode
         if done:
             final_state = state  # Store final state when the episode ends
-	    
-
-
-        # Optionally render the environment
 
     print(f"Episode {episode} ended.")
-
 
 
 
