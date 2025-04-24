@@ -32,9 +32,10 @@ def main():
         if final_state is None:
             state = env.reset()
         else:
-            env.reset()
+            # DO NOT reset
             env.set_state(final_qpos, final_qvel)
-            state = env.get_obs()  # step to generate a new observation
+            env.sim.forward()  # Recompute sim state (forces, contacts, etc.)
+            state = env.get_obs()  # This should now match final state from last ep
 
         print(f"\n=== Episode {episode} START ===")
         print("Initial state:", state)
