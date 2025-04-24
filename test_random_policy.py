@@ -1,6 +1,5 @@
 """Test a random policy on the OpenAI Gym Hopper environment.
 
-    
     TASK 1: Play around with this code to get familiar with the
             Hopper environment.
 
@@ -24,25 +23,25 @@ def main():
 
     n_episodes = 500
     render = True
+    final_state = None
 
     for episode in range(n_episodes):
-    if final_state is None:
-        state = env.reset()
-    else:
-        env.reset()
-        env.set_state(final_state)  # Inject the final state back into the env
-        state = final_state
+        if final_state is None:
+            state = env.reset()
+        else:
+            env.reset()
+            env.set_state(final_state)  # Inject the final state back into the env
+            state = final_state
 
-    done = False
-    while not done:
-        action = env.action_space.sample()
-        state, reward, done, info = env.step(action)
-        if render:
-            env.render()
+        done = False
+        while not done:
+            action = env.action_space.sample()
+            state, reward, done, info = env.step(action)
+            if render:
+                env.render()
 
-    final_state = state  # Save state even if done
-    print(f"Episode {episode} ended.")
+        final_state = state  # Save state even if done
+        print(f"Episode {episode} ended.")
 
 if __name__ == '__main__':
     main()
-
