@@ -1,16 +1,3 @@
-"""Test a random policy on the OpenAI Gym Hopper environment.
-
-    TASK 1: Play around with this code to get familiar with the
-            Hopper environment.
-
-            For example:
-                - What is the state space in the Hopper environment? Is it discrete or continuous?
-                - What is the action space in the Hopper environment? Is it discrete or continuous?
-                - What is the mass value of each link of the Hopper environment, in the source and target variants respectively?
-                - what happens if you don't reset the environment even after the episode is over?
-                - When exactly is the episode over?
-                - What is an action here?
-"""
 import pdb
 import gym
 import numpy as np
@@ -18,27 +5,27 @@ from env.custom_hopper import *
 
 def main():
     env = gym.make('CustomHopper-source-v0')
-    # env = gym.make('CustomHopper-target-v0')
 
     print('State space:', env.observation_space)
     print('Action space:', env.action_space)
     print('Dynamics parameters:', env.get_parameters())
 
-    final_state = None
+    use_saved_state = False
+    final_qpos, final_qvel = None, None
+
     n_episodes = 500
     render = True
 
     for episode in range(n_episodes):
-        if final_state is None:
+        if not use_saved_state:
             state = env.reset()
         else:
-            # DO NOT reset
             env.set_state(final_qpos, final_qvel)
-            env.sim.forward()  # Recompute sim state (forces, contacts, etc.)
-            state = env.get_obs()  # This should now match final state from last ep
+            env.sim.forward()
+            state = env.get_obs()
             print("Restored qpos:", final_qpos)
             print("Restored qvel:", final_qvel)
-    
+
         print(f"\n=== Episode {episode} START ===")
         print("Initial state:", state)
 
@@ -55,6 +42,7 @@ def main():
 
         final_qpos = env.sim.data.qpos.copy()
         final_qvel = env.sim.data.qvel.copy()
+        use_saved_state = True  # Flip the switch after first episode
 
         print("Final state:", state)
         print("Total reward:", total_reward)
