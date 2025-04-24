@@ -22,9 +22,9 @@ def main():
         else:
             env.set_state(final_qpos, final_qvel)
             env.sim.forward()
-            state = env.get_obs()
-            print("Restored qpos:", final_qpos)
-            print("Restored qvel:", final_qvel)
+            state = env.get_mujoco_state()
+            #print("Restored qpos:", final_qpos)
+            #print("Restored qvel:", final_qvel)
 
         print(f"\n=== Episode {episode} START ===")
         print("Initial state:", state)
