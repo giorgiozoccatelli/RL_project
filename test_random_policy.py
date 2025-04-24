@@ -33,23 +33,23 @@ def main():
 	final_state = None  # To store the last state
 
 	for episode in range(n_episodes):
-	    if final_state is None:
-		state = env.reset()  # First episode requires reset
-	    else:
-		state = final_state  # For subsequent episodes, use the final state
+		if final_state is None:
+			state = env.reset()  # First episode requires reset
+	    	else:
+			state = final_state  # For subsequent episodes, use the final state
 	
-	    done = False
+	    	done = False
 	
-	    while not done:
-		action = env.action_space.sample()  # Take a random action
-		state, reward, done, info = env.step(action)
+	    	while not done:
+			action = env.action_space.sample()  # Take a random action
+			state, reward, done, info = env.step(action)
 	
 		# Save the final state for the next episode
-		if done:
-		    final_state = state
+			if done:
+		    		final_state = state
 	
 		# Optionally render the environment
-		env.render()
+			env.render()
 
 	
 
