@@ -27,29 +27,39 @@ def main():
 	print('Action space:', env.action_space) # action-space
 	print('Dynamics parameters:', env.get_parameters()) # masses of each link of the Hopper
 
-	n_episodes = 500
-	render = True
+	import gym
+import numpy as np
 
-	final_state = None  # To store the last state
-	
-	for episode in range(n_episodes):
-	    if final_state is None:
-	        state = env.reset()  # First episode requires reset
-	    else:
-	        state = final_state  # For subsequent episodes, use the final state
-	    
-	    done = False
-	
-	    while not done:
-	        action = env.action_space.sample()  # Take a random action
-	        state, reward, done, info = env.step(action)
-	
-	        # Save the final state for the next episode
-	        if done:
-	            final_state = state
-	
-	        # Optionally render the environment
-	        env.render()
+# Initialize environment
+env = gym.make("CustomHopper-source-v0")
+
+final_state = None  # To store the last state
+
+n_episodes = 500
+render = True
+
+for episode in range(n_episodes):
+    # If there's no final state (for the first episode), do a reset
+    if final_state is None:
+        state = env.reset()  # First episode requires reset
+    else:
+        state = final_state  # For subsequent episodes, use the final state
+
+    done = False
+
+    while not done:
+        action = env.action_space.sample()  # Take a random action
+        state, reward, done, info = env.step(action)  # Step the environment
+
+        # Save the final state for the next episode
+        if done:
+            final_state = state  # Store final state when the episode ends
+
+        # Optionally render the environment
+        if render:
+            env.render()
+
+    print(f"Episode {episode} ended.")
 
 
 
